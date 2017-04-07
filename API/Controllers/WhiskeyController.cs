@@ -32,20 +32,24 @@ namespace API.Controllers
 		// POST api/whiskey
 		[HttpPost]
         public void Post([FromBody]Whiskey whiskey)
-        {
-			//_whiskeyRepository.Add(whiskey);
+		{
+			_whiskeyRepository.Insert(whiskey);
 		}
 
 		// PUT api/whiskey/5
 		[HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-		// DELETE api/whiskey/5
+        public void Put(int id, [FromBody]Whiskey whiskey)
+		{
+			_whiskeyRepository.Update(id.ToString(),whiskey);
+		}
+		
+	    // DELETE api/whiskey/5
 		[HttpDelete("{id}")]
         public void Delete(int id)
-        {
-        }
-    }
+		{
+			_whiskeyRepository.Delete(id.ToString());
+		}
+
+	}
 }
+

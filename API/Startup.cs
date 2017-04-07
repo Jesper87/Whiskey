@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ILogger = Logger.ILogger;
 
 namespace API
 {
@@ -35,6 +36,7 @@ namespace API
 			services.AddTransient<IWhiskeyRepository, WhiskeyRepository>();
 			services.AddTransient<IMongoDbClient, MongoDbClient>();
 			services.AddTransient<IMongoDbDataAccess, MongoDbDataAccess>();
+			services.AddTransient<ILogger, Logger.Logger>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

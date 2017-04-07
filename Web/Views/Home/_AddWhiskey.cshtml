@@ -1,0 +1,12 @@
+﻿@model Core.Models.Whiskey
+
+<h2>Add a new whiskey:</h2>
+<hr />
+<form id="formAddWhsiskey" name="formAddWhiskey" ng-submit="addWhiskey()">
+	@Html.EditorFor(m => m.Age)
+	@Html.EditorFor(m => m.AlcoholPercentage)
+	@Html.TextBoxFor(m => m.Name, new { ng_model = "name" })
+	@Html.EditorFor(m => m.Distillery.Description)
+	@Html.EditorFor(m => m.Distillery.Name)
+	<input type="submit" id="submit" value="Spara" />
+</form>	

@@ -6,6 +6,7 @@ using Core.Models;
 using Core.MongoDb.DataAccess;
 using Core.Repositories.Interfaces;
 using Core.Settings;
+using Logger;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -15,56 +16,92 @@ namespace Core.Repositories
 	{
 		protected IMongoDatabase Database;
 		protected IMongoCollection<Whiskey> Collection;
+		protected ILogger Logger;
 
-		public WhiskeyRepository(IMongoDbDataAccess iMongoDbDataAccess)
+		public WhiskeyRepository(IMongoDbDataAccess iMongoDbDataAccess, ILogger logger)
 		{
 			var mongoDbDataAccess = iMongoDbDataAccess;
 			Database = mongoDbDataAccess.GetMongoDatabase();
 			Collection = Database.GetCollection<Whiskey>(AppSettings.WhiskeyCollectionName);
+			Logger = logger;
 		}
 
 		public async Task<IEnumerable<Whiskey>> GetAll()
 		{
-			var whiskeys = new List<Whiskey>();
-			using (var result = await Collection.FindAsync(new BsonDocument()))
+			try
 			{
-				while (await result.MoveNextAsync())
+				var whiskeys = new List<Whiskey>();
+				using (var result = await Collection.FindAsync(new BsonDocument()))
 				{
-					var batch = result.Current;
-					whiskeys.AddRange(batch.Where(document => document != null));
+					while (await result.MoveNextAsync())
+					{
+						var batch = result.Current;
+						whiskeys.AddRange(batch.Where(document => document != null));
+					}
 				}
+				return whiskeys;
 			}
-			return whiskeys;
+			catch (Exception e)
+			{
+				Logger.LogError("[WhiskeyRepository.GetAll] Exception thrown: ", e);
+				return Enumerable.Empty<Whiskey>();
+			}
+
 		}
 
 		public async Task<Whiskey> GetById(string id)
 		{
-			var whiskey = new Whiskey();
-			using (var result = await Collection.FindAsync(new BsonDocument { { "_id", new ObjectId(id) } }))
+			try
 			{
-				var batch = result.Current.SingleOrDefault();
-				if (batch != null)
-					whiskey = batch;
+				var whiskey = new Whiskey();
+				using (var result = await Collection.FindAsync(new BsonDocument { { "_id", new ObjectId(id) } }))
+				{
+					var batch = result.Current.SingleOrDefault();
+					if (batch != null)
+						whiskey = batch;
+				}
+				return whiskey;
 			}
-			return whiskey;
-
+			catch (Exception e)
+			{
+				Logger.LogError("[WhiskeyRepository.GetById] Exception thrown, parameter id = " + id + " ", e);
+				return null;
+			}
 		}
 
 		public async Task<Whiskey> Insert(Whiskey whiskey)
 		{
-			await Collection.InsertOneAsync(whiskey);
-			return await GetById(whiskey.Id.ToString());
+			try
+			{
+				await Collection.InsertOneAsync(whiskey);
+				return await GetById(whiskey.Id.ToString());
+			}
+			catch (Exception e)
+			{
+				Logger.LogError("[WhiskeyRepository.Insert] Exception thrown: ",e);
+				return null;
+			}
+			
 		}
 
-		public void Update(Whiskey whiskey)
+		public void Update(string toString, Whiskey whiskey)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		public async Task<long> Delete(string id)
 		{
-			var result = await Collection.DeleteOneAsync(new BsonDocument {{"_id", new ObjectId(id)}});
-			return result.DeletedCount;
+			try
+			{
+				var result = await Collection.DeleteOneAsync(new BsonDocument { { "_id", new ObjectId(id) } });
+				return result.DeletedCount;
+			}
+			catch (Exception e)
+			{
+				Logger.LogError("[WhiskeyRepository.Delete] Exception thrown: ", e);
+				return 0;
+			}
+
 		}
 	}
 }

@@ -4,10 +4,13 @@ var app = angular.module('myApp', []);
 app.controller('myController', ['$scope', 'whiskeyService', function ($scope, whiskeyService) {
 	$scope.loading = true;
 
-	$scope.edit = function (whiskey) {
-		console.log("Edit clicked for " + whiskey.name);
+	$scope.edit = function(whiskey) {
+		console.log("Edit clicked for " + whiskey.name);	
+	};
 
-	}
+	$scope.addWhiskey = function() {
+		console.log("Formdata: " +  form.name);
+	};
 
 	var loadWhiskey = function () {
 		whiskeyService.getWhiskey()

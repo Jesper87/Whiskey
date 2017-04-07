@@ -9,7 +9,7 @@ namespace Core.Repositories.Interfaces
 		Task<IEnumerable<Whiskey>> GetAll();
 		Task<Whiskey> GetById(string id);
 		Task<Whiskey> Insert(Whiskey whiskey);
-		void Update(Whiskey whiskey);
+		void Update(string toString, Whiskey whiskey);
 		Task<long> Delete(string id);
     }
 }

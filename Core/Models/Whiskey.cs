@@ -5,6 +5,11 @@ namespace Core.Models
 {
     public class Whiskey
     {
+	    public Whiskey()
+	    {
+		    Distillery = new Distillery();
+	    }
+
 		/// <summary>
 		/// MongoDB ObjectId
 		/// </summary>

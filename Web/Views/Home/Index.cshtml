@@ -1,6 +1,12 @@
-﻿<div ng-controller="myController">
+﻿@using Core.Models
+
+<div ng-controller="myController">
 
 	<h1>Whiskey selection</h1>
+	
+	@{
+		Html.RenderPartial("_AddWhiskey", new Whiskey());
+	}
 
 	<div ng-show="loading">
 		<p>loading whiskeys.....</p>
@@ -12,17 +18,12 @@
 			{{$index + 1}} - <a href="#" ng-click="showDetails = ! showDetails">{{whiskey.name}}</a>
 		</h3>
 
-
 		<div ng-show="showDetails">
 			<p><span>Age: </span>{{whiskey.age}}</p>
 			<p><span>Alcohol Percentage: </span>{{whiskey.alcoholPercentage}}</p>
 			<h4><strong>Distillery</strong></h4>
 			<p><span>Name: </span>{{whiskey.distillery.name}}</p>
 			<p><span>Description: </span>{{whiskey.distillery.description}}</p>
-
-			@*<div whiskey-edit-directive
-				 whiskey="{{whiskey}}"></div>*@
-
 			<button ng-click="edit(whiskey)">Edit</button>
 		</div>
 

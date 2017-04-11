@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Core.MongoDb.Client;
+using Core.MongoDb.DataAccess;
+using Core.Repositories;
+using Core.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ILogger = Logger.ILogger;
 
 namespace Web
 {
@@ -27,10 +28,13 @@ namespace Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCors();
-
 			// Add framework services.
 			services.AddMvc();
+			services.AddMvc();
+			services.AddTransient<IWhiskeyRepository, WhiskeyRepository>();
+			services.AddTransient<IMongoDbClient, MongoDbClient>();
+			services.AddTransient<IMongoDbDataAccess, MongoDbDataAccess>();
+			services.AddTransient<ILogger, Logger.Logger>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,14 +54,17 @@ namespace Web
 			}
 
 			app.UseStaticFiles();
-			app.UseCors(builder =>
-builder.AllowAnyOrigin());
-
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
+			});
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "api",
+					template: "{controller=Whiskey}/{action=Index}/{id?}");
 			});
 		}
 	}

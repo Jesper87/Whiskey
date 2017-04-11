@@ -25,7 +25,7 @@ app.controller('myController', ['$scope', 'whiskeyService', function ($scope, wh
 
 app.service('whiskeyService', ['$http', function ($http) {
 	this.getWhiskey = function () {
-		return $http.get('http://localhost:55294/api/whiskey')
+		return $http.get('api/whiskey')
 			.then(function (response) {
 				var whiskeys = response.data;
 				return whiskeys;

@@ -11,7 +11,6 @@
   <ItemGroup>
     <Content Include="wwwroot\js\app.js" />
     <Content Include="wwwroot\js\app.min.js" />
-    <Content Include="wwwroot\js\template\whiskey-edit-directive.cshtml" />
     <Content Include="wwwroot\lib\angular\dist\angular.js" />
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\js\template\" />
   </ItemGroup>
 
 </Project>

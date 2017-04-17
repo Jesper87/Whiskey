@@ -4,14 +4,6 @@ var app = angular.module('myApp', []);
 app.controller('myController', ['$scope', 'whiskeyService', function ($scope, whiskeyService) {
 	$scope.loading = true;
 
-	$scope.edit = function(whiskey) {
-		console.log("Edit clicked for " + whiskey.name);	
-	};
-
-	$scope.addWhiskey = function() {
-		console.log("Formdata: " +  form.name);
-	};
-
 	var loadWhiskey = function () {
 		whiskeyService.getWhiskey()
 			.then(function (data) {
@@ -20,15 +12,36 @@ app.controller('myController', ['$scope', 'whiskeyService', function ($scope, wh
 			});
 	}
 
+	var addWhiskey = function (data) {
+		whiskeyService.addWhiskey(data)
+			.then(function (response) {
+				loadWhiskey();
+				$scope.message = response.data;
+				return;
+			});
+	}
+
+	$scope.addWhiskey = function (form) {
+		addWhiskey(form);
+	};
+
 	loadWhiskey();
 }]);
 
 app.service('whiskeyService', ['$http', function ($http) {
+
 	this.getWhiskey = function () {
 		return $http.get('api/whiskey')
 			.then(function (response) {
 				var whiskeys = response.data;
 				return whiskeys;
+			});
+	}
+
+	this.addWhiskey = function (data) {
+		return $http.post('api/whiskey/', data)
+			.then(function (response) {
+				return response;
 			});
 	}
 }]);

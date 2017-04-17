@@ -2,11 +2,34 @@
 
 <h2>Add a new whiskey:</h2>
 <hr />
-<form id="formAddWhsiskey" name="formAddWhiskey" ng-submit="addWhiskey()">
-	@Html.EditorFor(m => m.Age)
-	@Html.EditorFor(m => m.AlcoholPercentage)
-	@Html.TextBoxFor(m => m.Name, new { ng_model = "name" })
-	@Html.EditorFor(m => m.Distillery.Description)
-	@Html.EditorFor(m => m.Distillery.Name)
-	<input type="submit" id="submit" value="Spara" />
+<form name="formAddWhiskey" ng-submit="addWhiskey(form)">
+	
+	@*<input id="antiForgeryToken" ng-model="form.antiForgeryToken" type="hidden" data-ng-init="antiForgeryToken='@GetAntiForgeryToken()'" />*@
+
+	<div>
+		<div>
+			<label>Name</label>
+			<input type="text" ng-model="form.name" />
+		</div>
+		<div>
+			<label>Age</label>
+			<input type="number" ng-model="form.age"/>
+		</div>
+		<div>
+			<label>AlcoholPercentage</label>
+			<input type="number" ng-model="form.alcoholPercentage" />
+		</div>
+		<div>
+			<label>Distillery Name</label>
+			<input type="text" ng-model="form.distillery.name" />
+		</div>
+		<div>
+			<label>Distillery Description</label>
+			<input type="text" ng-model="form.distillery.description" />
+		</div>
+		<div>
+			<button type="submit" >Spara</button>
+		</div>
+	</div>
 </form>	
+<p>{{message}}</p>

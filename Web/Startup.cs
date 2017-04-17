@@ -1,7 +1,7 @@
-﻿using Core.MongoDb.Client;
-using Core.MongoDb.DataAccess;
+﻿using Core.Context;
 using Core.Repositories;
 using Core.Repositories.Interfaces;
+using Core.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,11 +30,13 @@ namespace Web
 		{
 			// Add framework services.
 			services.AddMvc();
-			services.AddMvc();
+
+			services.Configure<WebsiteOptions>(Configuration.GetSection("MongoConnection"));
+			services.AddTransient<IWebsiteOptions, WebsiteOptions>();
+			services.AddTransient<IWhiskeyContext, WhiskeyContext>();
 			services.AddTransient<IWhiskeyRepository, WhiskeyRepository>();
-			services.AddTransient<IMongoDbClient, MongoDbClient>();
-			services.AddTransient<IMongoDbDataAccess, MongoDbDataAccess>();
 			services.AddTransient<ILogger, Logger.Logger>();
+			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +48,6 @@ namespace Web
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-				app.UseBrowserLink();
 			}
 			else
 			{

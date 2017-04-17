@@ -31,9 +31,11 @@ namespace Web.Controllers
 
 		// POST api/whiskey
 		[HttpPost]
-        public void Post([FromBody]Whiskey whiskey)
+		//[ValidateAntiForgeryToken]
+		public JsonResult Post([FromBody]Whiskey whiskey)
 		{
-			_whiskeyRepository.Insert(whiskey);
+			_whiskeyRepository.Add(whiskey);
+			return new JsonResult("Whiskey added");
 		}
 
 		// PUT api/whiskey/5

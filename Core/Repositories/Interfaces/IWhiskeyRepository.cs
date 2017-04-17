@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
+using MongoDB.Driver;
 
 namespace Core.Repositories.Interfaces
 {
@@ -8,8 +9,8 @@ namespace Core.Repositories.Interfaces
     {
 		Task<IEnumerable<Whiskey>> GetAll();
 		Task<Whiskey> GetById(string id);
-		Task<Whiskey> Insert(Whiskey whiskey);
-		void Update(string toString, Whiskey whiskey);
-		Task<long> Delete(string id);
+		Task Add(Whiskey whiskey);
+	    Task<ReplaceOneResult> Update(string id, Whiskey item);
+		Task<DeleteResult> Delete(string id);
     }
 }

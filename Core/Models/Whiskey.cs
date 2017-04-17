@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Core.Models
@@ -13,6 +14,7 @@ namespace Core.Models
 		/// <summary>
 		/// MongoDB ObjectId
 		/// </summary>
+		[BsonId]
 		public ObjectId Id { get; set; }
 
 		[BsonElement("WhiskeyName")]

@@ -33,7 +33,7 @@ namespace Test
 			{
 				new Whiskey
 				{
-					Age = 12, AlcoholPercentage = 60, Id =  new ObjectId("123"),Name = "Test",Distillery = new Distillery{Name = "TestDist", Description = "Desc"}
+					Age = 12, AlcoholPercentage = 60, Id =  "123",Name = "Test",Distillery = new Distillery{Name = "TestDist", Description = "Desc"}
 				}
 			};
 		}

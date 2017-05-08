@@ -1,9 +1,9 @@
 ﻿@using Core.Models
 
-<div ng-controller="myController">
+<div ng-controller="myController" ng-cloak class="row">
 
 	<h1>Whiskey selection</h1>
-	
+
 	@{
 		Html.RenderPartial("_AddWhiskey", new Whiskey());
 	}
@@ -12,21 +12,63 @@
 		<p>loading whiskeys.....</p>
 	</div>
 
-	<div ng-cloak ng-repeat="whiskey in whiskeys">
+	<div ng-show="!loading">
+		<a href="#" ng-click="showDetails = ! showDetails">
+			<span ng-show="!showDetails">Show</span><span ng-show="showDetails">Hide</span> whiskeys
+		</a>
+		<div class="table-responsive" ng-show="showDetails">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>
+							Name
+						</th>
+						<th>
+							Age
+						</th>
+						<th>
+							Alcohol Percentage
+						</th>
+						<th>
+							Distillery Name
+						</th>
+						<th>
+							Distillery Description
+						</th>
+						<th>
+							Actions
+						</th>
+					</tr>
+				</thead>
+				<tbody ng-cloak ng-repeat="whiskey in whiskeys">
+					<tr>
+						<td>
+							{{$index + 1}}
+						</td>
+						<td>
+							{{whiskey.name}}
+						</td>
+						<td>
+							{{whiskey.age}}
+						</td>
+						<td>
+							{{whiskey.alcoholPercentage}}
+						</td>
+						<td>
+							{{whiskey.distillery.name}}
+						</td>
+						<td>
+							{{whiskey.distillery.description}}
+						</td>
+						<td>
+							<button ng-click="edit(whiskey)">Edit</button>
+							<button ng-click="deleteWhiskey(whiskey)">Delete</button>
+						</td>
+					</tr>
 
-		<h3>
-			{{$index + 1}} - <a href="#" ng-click="showDetails = ! showDetails">{{whiskey.name}}</a>
-		</h3>
-
-		<div ng-show="showDetails">
-			<p><span>Age: </span>{{whiskey.age}}</p>
-			<p><span>Alcohol Percentage: </span>{{whiskey.alcoholPercentage}}</p>
-			<h4><strong>Distillery</strong></h4>
-			<p><span>Name: </span>{{whiskey.distillery.name}}</p>
-			<p><span>Description: </span>{{whiskey.distillery.description}}</p>
-			<button ng-click="edit(whiskey)">Edit</button>
+				</tbody>
+			</table>
 		</div>
-
 	</div>
-
 </div>

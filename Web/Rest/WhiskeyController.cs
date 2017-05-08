@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Core.Models;
 using Core.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using System;
 
-namespace Web.Controllers
+namespace Web.Rest
 {
 	[Route("api/whiskey")]
     public class WhiskeyController : Controller
@@ -44,14 +46,13 @@ namespace Web.Controllers
 		{
 			_whiskeyRepository.Update(id.ToString(),whiskey);
 		}
-		
-	    // DELETE api/whiskey/5
-		[HttpDelete("{id}")]
-        public void Delete(int id)
-		{
-			_whiskeyRepository.Delete(id.ToString());
-		}
 
+		// DELETE api/whiskey/5
+		[HttpDelete("{id}")]
+        public void Delete(string id)
+		{
+			_whiskeyRepository.Delete(id);
+		}
 	}
 }
 

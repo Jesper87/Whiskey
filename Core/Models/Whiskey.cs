@@ -14,8 +14,10 @@ namespace Core.Models
 		/// <summary>
 		/// MongoDB ObjectId
 		/// </summary>
+
 		[BsonId]
-		public ObjectId Id { get; set; }
+		[BsonRepresentation(BsonType.ObjectId)]
+		public string Id { get; set; }
 
 		[BsonElement("WhiskeyName")]
 		public string Name { get; set; }

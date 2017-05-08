@@ -3,6 +3,7 @@ var app = angular.module('myApp', []);
 
 app.controller('myController', ['$scope', 'whiskeyService', function ($scope, whiskeyService) {
 	$scope.loading = true;
+	$scope.whiskeys = [];
 
 	var loadWhiskey = function () {
 		whiskeyService.getWhiskey()
@@ -19,6 +20,20 @@ app.controller('myController', ['$scope', 'whiskeyService', function ($scope, wh
 				$scope.message = response.data;
 				return;
 			});
+	}
+
+	var deleteWhiskey = function (data) {
+		console.log("delete hitted " + data)
+		whiskeyService.deleteWhiskey(data)
+			.then(function (response) {
+				loadWhiskey();
+				console.log(response.data);
+				return;
+			});
+	}
+
+	$scope.deleteWhiskey = function (whiskey) {
+		deleteWhiskey(whiskey);	
 	}
 
 	$scope.addWhiskey = function (form) {
@@ -40,6 +55,13 @@ app.service('whiskeyService', ['$http', function ($http) {
 
 	this.addWhiskey = function (data) {
 		return $http.post('api/whiskey/', data)
+			.then(function (response) {
+				return response;
+			});
+	}
+
+	this.deleteWhiskey = function (data) {
+		return $http.delete('api/whiskey/' + data.id)
 			.then(function (response) {
 				return response;
 			});

@@ -1,35 +1,38 @@
 ﻿@model Core.Models.Whiskey
-
-<h2>Add a new whiskey:</h2>
 <hr />
-<form name="formAddWhiskey" ng-submit="addWhiskey(form)">
-	
-	@*<input id="antiForgeryToken" ng-model="form.antiForgeryToken" type="hidden" data-ng-init="antiForgeryToken='@GetAntiForgeryToken()'" />*@
-
-	<div>
-		<div>
+<h3>Add a new whiskey:</h3>
+<hr />
+<form name="formAddWhiskey" ng-submit="addWhiskey(form)" class="form-inline">
+	<div class="col-md-4">
+		<div class="form-group">
 			<label>Name</label>
-			<input type="text" ng-model="form.name" />
-		</div>
-		<div>
-			<label>Age</label>
-			<input type="number" ng-model="form.age"/>
-		</div>
-		<div>
-			<label>AlcoholPercentage</label>
-			<input type="number" ng-model="form.alcoholPercentage" />
-		</div>
-		<div>
-			<label>Distillery Name</label>
-			<input type="text" ng-model="form.distillery.name" />
-		</div>
-		<div>
-			<label>Distillery Description</label>
-			<input type="text" ng-model="form.distillery.description" />
-		</div>
-		<div>
-			<button type="submit" >Spara</button>
+			<input type="text" ng-model="form.name" class="form-control" placeholder="Glenfarclas 105" />
 		</div>
 	</div>
-</form>	
+	<div class="col-md-4">
+		<div class="form-group">
+			<label>Age</label>
+			<input type="number" ng-model="form.age" class="form-control" placeholder="12" />
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+			<label>AlcoholPercentage</label>
+			<input type="number" ng-model="form.alcoholPercentage" class="form-control" placeholder="42.6" />
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+			<label>Distillery Name</label>
+			<input type="text" ng-model="form.distillery.name" class="form-control" placeholder="Glenfarclas" />
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+			<label>Distillery Description</label>
+			<input type="text" ng-model="form.distillery.description" class="form-control" placeholder="Distillery description" />
+		</div>
+	</div>
+	<button type="submit" class="btn btn-default">Spara</button>
+</form>
 <p>{{message}}</p>
